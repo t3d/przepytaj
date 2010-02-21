@@ -1,0 +1,66 @@
+#!/bin/sh
+# Prosty skrypt do automatyzacji przepytywania
+#
+# Copyright (C) 2007 Tomasz Dlugosz <tomek3d@gmail.com>
+#
+# Distributed under the terms of the GNU General Public License v3
+
+info() {
+cat << KONIEC
+NAZWA
+     przepytaj - przeprowadza sprawdzenie opanowania materialu na kolokwium ;)
+
+SKLADNIA
+     przepytaj nazwa_pliku
+     gdzie nazwa_pliku wskazuje plik z materialem do opanowania
+
+SKLADNIA PLIKU Z MATERIALEM
+     Linie zawierajace znak # traktowane sa jako komentarz.
+     W pozostalych liniach nalezy umiescic odpowiadajace sobie fragmenty
+     materialu oddzielone znakiem srednika (;).
+     Przykladowo poczatek pliku moglby wygladac tak:
+
+     # To jest komentarz
+     Azot;N
+     rower;bicycle
+     rok bitwy pod Grunwaldem;1410
+     2+2*2;6
+KONIEC
+        exit 1
+}
+
+pytaj() {
+	echo -e '\033[36mPlik z materialem zaladowany!\033[0m'
+	echo
+	ile_bledow=0
+	ile_pytan=0
+	staryifs=$IFS
+	export IFS='
+'
+	for i in `grep -v "#" "$1"`;do
+		ile_pytan=$(($ile_pytan+1))
+		echo -e 'Pytanie nr \033[33m'$ile_pytan'\033[0m'
+		echo -n `echo $i | cut -d ";" -f 1`" : "
+		read odpowiedz
+		poprawnie=`echo $i | cut -d ";" -f 2`
+		if [ "$odpowiedz" = "$poprawnie" ];then
+			echo -e '\033[32mdobrze!\033[0m'
+		else 
+			echo -e '\033[31mBLAD!\033[0m'
+			echo -e 'Mialo byc \033[32m'$poprawnie'\033[0m, a nie \033[31m'$odpowiedz'\033[0m!'
+			ile_bledow=$(($ile_bledow+1))
+		fi
+        done
+	export IFS=$staryifs
+	echo -e 'Na \033[33m'$ile_pytan'\033[0m pytan bylo \033[31m'$ile_bledow'\033[0m bledow!'
+}
+
+if [ $# = 1 ];then
+		if [ -f "$1" ]; then
+			pytaj "$1"
+		else 
+			echo "nie ma takiego pliku!"
+		fi
+else
+		info
+	fi
