@@ -30,6 +30,7 @@ KONIEC
 }
 
 pytaj() {
+        reset
 	echo -e '\033[36mPlik z materialem zaladowany!\033[0m'
 	echo
 	ile_bledow=0
