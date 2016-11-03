@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Prosty skrypt do automatyzacji przepytywania
 #
 # Copyright (C) 2007 Tomasz Dlugosz <tomek3d@gmail.com>
