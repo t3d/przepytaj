@@ -38,7 +38,7 @@ pytaj() {
   staryifs=$IFS
   export IFS='
 '
-  for i in `grep -v "#" "$1"`;do
+  for i in `cat "$1"`;do
     ile_pytan=$(($ile_pytan+1))
     echo -e 'Pytanie nr \033[33m'$ile_pytan'\033[0m'
     echo -n `echo $i | cut -d ";" -f 1`" : "
@@ -59,7 +59,7 @@ pytaj() {
 if [ $# = 1 ];then
   if [ -f "$1" ]; then
     temp_file=$(mktemp)
-    shuf "$1" > $temp_file
+    grep -v '#' "$1" | shuf > $temp_file
     pytaj $temp_file
     rm $temp_file
   else
