@@ -1,24 +1,24 @@
 #!/bin/bash
 # Prosty skrypt do automatyzacji przepytywania
 #
-# Copyright (C) 2007 Tomasz Dlugosz <tomek3d@gmail.com>
+# Copyright (C) 2007,2016 Tomasz Długosz <tomek3d@gmail.com>
 #
 # Distributed under the terms of the GNU General Public License v3
 
 info() {
   cat << KONIEC
 NAZWA
-     przepytaj - przeprowadza sprawdzenie opanowania materialu na kolokwium ;)
+     przepytaj - przeprowadza sprawdzenie opanowania materiału na kolokwium ;)
 
-SKLADNIA
+SKŁADNIA
      przepytaj nazwa_pliku
-     gdzie nazwa_pliku wskazuje plik z materialem do opanowania
+     gdzie nazwa_pliku wskazuje plik z materiałem do opanowania
 
-SKLADNIA PLIKU Z MATERIALEM
-     Linie zawierajace znak # traktowane sa jako komentarz.
-     W pozostalych liniach nalezy umiescic odpowiadajace sobie fragmenty
-     materialu oddzielone znakiem srednika (;).
-     Przykladowo poczatek pliku moglby wygladac tak:
+SKŁADNIA PLIKU Z MATERIAŁEM
+     Linie zawierające znak # traktowane są jako komentarz.
+     W pozostałych liniach należy umieścić odpowiadające sobie fragmenty
+     materiału oddzielone znakiem średnika (;).
+     Przykładowo początek pliku mógłby wyglądać tak:
 
      # To jest komentarz
      Azot;N
@@ -31,7 +31,7 @@ KONIEC
 
 pytaj() {
   reset
-  echo -e '\033[36mPlik z materialem zaladowany!\033[0m'
+  echo -e '\033[36mPlik z materiałem załadowany!\033[0m'
   echo
   ile_bledow=0
   ile_pytan=0
@@ -47,13 +47,13 @@ pytaj() {
     if [ "$odpowiedz" = "$poprawnie" ];then
       echo -e '\033[32mdobrze!\033[0m'
     else
-      echo -e '\033[31mBLAD!\033[0m'
-      echo -e 'Mialo byc \033[32m'$poprawnie'\033[0m, a nie \033[31m'$odpowiedz'\033[0m!'
+      echo -e '\033[31mBŁĄD!\033[0m'
+      echo -e 'Miało być \033[32m'$poprawnie'\033[0m, a nie \033[31m'$odpowiedz'\033[0m!'
       ile_bledow=$(($ile_bledow+1))
     fi
   done
   export IFS=$staryifs
-  echo -e 'Na \033[33m'$ile_pytan'\033[0m pytan bylo \033[31m'$ile_bledow'\033[0m bledow!'
+  echo -e 'Na \033[33m'$ile_pytan'\033[0m pytań było \033[31m'$ile_bledow'\033[0m błędów!'
 }
 
 if [ $# = 1 ];then
@@ -63,7 +63,7 @@ if [ $# = 1 ];then
     pytaj $temp_file
     rm $temp_file
   else
-    echo "nie ma takiego pliku!"
+    echo "Nie ma takiego pliku!"
   fi
 else
     info
