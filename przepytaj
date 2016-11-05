@@ -51,7 +51,7 @@ pytaj() {
       echo -e 'Mialo byc \033[32m'$poprawnie'\033[0m, a nie \033[31m'$odpowiedz'\033[0m!'
       ile_bledow=$(($ile_bledow+1))
     fi
-        done
+  done
   export IFS=$staryifs
   echo -e 'Na \033[33m'$ile_pytan'\033[0m pytan bylo \033[31m'$ile_bledow'\033[0m bledow!'
 }
