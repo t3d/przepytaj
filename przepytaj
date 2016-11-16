@@ -48,7 +48,12 @@ pytaj() {
       echo -e '\033[32mdobrze!\033[0m'
     else
       echo -e '\033[31mBŁĄD!\033[0m'
-      echo -e 'Miało być \033[32m'$poprawnie'\033[0m, a nie \033[31m'$odpowiedz'\033[0m!'
+      echo -en 'Miało być \033[32m'$poprawnie'\033[0m'
+      if [ "$odpowiedz" == "" ] ; then
+        echo '!'
+      else
+        echo -e ', a nie \033[31m'$odpowiedz'\033[0m!'
+      fi
       ile_bledow=$(($ile_bledow+1))
     fi
   done
