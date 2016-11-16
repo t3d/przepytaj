@@ -11,7 +11,7 @@ NAZWA
      przepytaj - przeprowadza sprawdzenie opanowania materiału na kolokwium ;)
 
 SKŁADNIA
-     przepytaj nazwa_pliku
+     przepytaj -f nazwa_pliku [-l <liczba pytań>]
      gdzie nazwa_pliku wskazuje plik z materiałem do opanowania
 
 SKŁADNIA PLIKU Z MATERIAŁEM
@@ -56,15 +56,34 @@ pytaj() {
   echo -e 'Na \033[33m'$ile_pytan'\033[0m pytań było \033[31m'$ile_bledow'\033[0m błędów!'
 }
 
-if [ $# = 1 ];then
-  if [ -f "$1" ]; then
+while getopts ":f:l:" opt; do
+  case $opt in
+    f)
+      plik=$OPTARG
+      ;;
+    l)
+      limit=$OPTARG
+      ;;
+    :)
+      echo "Opcja -$OPTARG wymaga argmentu"
+      exit 1
+      ;;
+  esac
+done
+
+if [ -z ${plik+x} ];then
+  info
+else
+  if [ -f "$plik" ]; then
     temp_file=$(mktemp)
-    grep -v '#' "$1" | shuf > $temp_file
+    if [ -z ${limit+x} ] ; then
+        grep -v '#' "$plik" | shuf > $temp_file
+    else
+        grep -v '#' "$plik" | shuf | head -n ${limit} > $temp_file
+    fi
     pytaj $temp_file
     rm $temp_file
   else
     echo "Nie ma takiego pliku!"
   fi
-else
-    info
 fi
