@@ -11,7 +11,11 @@ NAZWA
      przepytaj - przeprowadza sprawdzenie opanowania materiału na kolokwium ;)
 
 SKŁADNIA
-     przepytaj -f nazwa_pliku [-l <liczba pytań>]
+     przepytaj -f <nazwa_pliku> [-l <liczba pytań>] [-r]
+
+     -r
+        zamienia miejscami pytanie i opowiedź z pliku
+
      gdzie nazwa_pliku wskazuje plik z materiałem do opanowania
 
 SKŁADNIA PLIKU Z MATERIAŁEM
@@ -30,6 +34,9 @@ KONIEC
 }
 
 pytaj() {
+  if [ -z ${zamiana+x} ]; then
+    sed -e's/\(.*\);\(.*\)/\2;\1/' -i $1
+  fi
   reset
   echo -e '\033[36mPlik z materiałem załadowany!\033[0m'
   echo
@@ -61,13 +68,21 @@ pytaj() {
   echo -e 'Na \033[33m'$ile_pytan'\033[0m pytań było \033[31m'$ile_bledow'\033[0m błędów!'
 }
 
-while getopts ":f:l:" opt; do
+while getopts ":f:l:r" opt; do
   case $opt in
     f)
       plik=$OPTARG
       ;;
     l)
       limit=$OPTARG
+      ;;
+    r)
+      if command -v sed ; then
+      zamiana=1
+      else
+        echo "Aby zamienić pytania z odpowiedziami wymagany jest sed"
+        exit 1
+      fi
       ;;
     :)
       echo "Opcja -$OPTARG wymaga argmentu"
