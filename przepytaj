@@ -78,7 +78,8 @@ pytaj() {
   echo
   echo -e 'Na \033[33m'$ile_pytan'\033[0m pytań było \033[31m'$ile_bledow'\033[0m błędów!'
   if ! [ -z ${czasy+x} ]; then
-    echo -e 'Test zajął \033[36m'$SECONDS'\033[0m sekund.'
+    echo -e 'Test zajął \033[36m'$(($SECONDS/60)) minut i $(($SECONDS % 60 ))' sekund\033[0m.'
+    echo -e 'To średnio \033[36m'$(($SECONDS/$ile_pytan))'\033[0m sekund na pytanie.'
   fi
 }
 
