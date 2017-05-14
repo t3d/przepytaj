@@ -78,7 +78,7 @@ pytaj() {
   echo
   echo -e 'Na \033[33m'$ile_pytan'\033[0m pytań było \033[31m'$ile_bledow'\033[0m błędów!'
   if ! [ -z ${czasy+x} ]; then
-  echo -e 'Test zajął \033[36m'$SECONDS'\033[0m sekund.'
+    echo -e 'Test zajął \033[36m'$SECONDS'\033[0m sekund.'
   fi
 }
 
