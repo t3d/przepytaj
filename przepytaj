@@ -69,6 +69,7 @@ pytaj() {
     fi
   done
   export IFS=$staryifs
+  echo
   echo -e 'Na \033[33m'$ile_pytan'\033[0m pytań było \033[31m'$ile_bledow'\033[0m błędów!'
 }
 
