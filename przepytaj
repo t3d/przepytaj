@@ -35,11 +35,11 @@ KONIEC
 
 pytaj() {
   if [ -z ${zamiana+x} ]; then
-    pole_pytanie=2
-    pole_odpowiedz=1
-  else
     pole_pytanie=1
     pole_odpowiedz=2
+  else
+    pole_pytanie=2
+    pole_odpowiedz=1
   fi
   reset
   echo -e '\033[36mPlik z materiałem załadowany!\033[0m'
